@@ -5,8 +5,8 @@ import 'dart:math' as Math;
 
 class Hibi extends MyComponent with HasGameRef {
 
-  Hibi({required World world, required Vector3 position3D})
-      : super(world: world, position3D: position3D, anchor: Anchor.center){
+  Hibi({required game,required World world, required Vector3 position3D})
+      : super(game: game, world: world, position3D: position3D, anchor: Anchor.center){
     super.size = Vector2.all(300);
   }
 

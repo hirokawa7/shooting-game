@@ -5,8 +5,8 @@ import 'my_component.dart';//MyComponent
 class BackGround extends MyComponent with HasGameRef{
 
   //worldはcomponentにカメラの影響を与えるために必要
-  BackGround({required World world})
-      :super(world: world, position3D: Vector3.zero(), anchor: Anchor.topLeft);
+  BackGround({required game, required World world})
+      :super(game: game, world: world, position3D: Vector3.zero(), anchor: Anchor.topLeft);
 
   @override
   Future<void> onLoad() async{

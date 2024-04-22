@@ -17,11 +17,15 @@ class MyGame extends FlameGame with HasGameRef{
 
 
   MyGame(){
-    _backGround = BackGround(world: super.world);
-    _enemy = Enemy(world: super.world, position3D: Vector3.zero());
-    _player = Player(world: super.world, position3D: Vector3(0, 0, -300));
+    _backGround = BackGround(game: this, world: super.world);
+    _enemy = Enemy(game: this, world: super.world, position3D: Vector3.zero());
+    _player = Player(game: this, world: super.world, position3D: Vector3(0, 0, -300));
   }
 
+  //getter
+  BackGround get backGround => _backGround;
+  Enemy get enemy => _enemy;
+  Player get player => _player;
 
   @override
   Future<void> onLoad() async{

@@ -8,7 +8,7 @@ import 'my_component.dart';//MyComponent
 import 'dart:math';
 
 //bullet
-import 'bullet.dart';
+import 'enemy_bullet.dart';
 
 import 'package:perlin/perlin.dart';//Parin noise
 
@@ -20,12 +20,13 @@ import 'dart:async';//Completer
 
 class Enemy extends MyComponent with HasGameRef {
 
-  //defaultのenemy画像
-  //String imagePath = "youngman_25.png";
-  //File? _image;
 
-  Enemy({required World world, required Vector3 position3D}):
-        super(world: world, position3D: position3D, anchor: Anchor.center) {
+  bool _isDamaged = false;//ダメージフラグ;
+
+  void set isDamaged(bool flag) => _isDamaged = flag;
+
+  Enemy({required game, required World world, required Vector3 position3D}):
+        super(game: game, world: world, position3D: position3D, anchor: Anchor.center) {
     super.size = Vector2.all(200);
     //_image = imageFile;
   }
@@ -63,6 +64,7 @@ class Enemy extends MyComponent with HasGameRef {
    */
   final List<double> noiseX = perlin2d(width: 1, height: 50, frequency: 71)[1];
   final List<double> noiseY = perlin2d(width: 1, height: 50, frequency: 52)[1];
+  //final List<double> noiseZ = perlin2d(width: 1, height: 50, frequency: 35)[1];
 
   @override
   void update(double dt) async {
@@ -70,16 +72,18 @@ class Enemy extends MyComponent with HasGameRef {
 
     //print(noiseX[super.frameCount%noiseX.length]);
 
-    super.position = Vector2(
+    super.position3D = Vector3(
       (noiseX[super.frameCount%noiseX.length]+0.5) * gameRef.size.x,
       (noiseY[super.frameCount%noiseY.length]+0.5) * gameRef.size.y,
+      0//(noiseZ[super.frameCount%noiseY.length]+0.5) * 250,
     );
 
     if(super.time.floor()%6 == 3 && (super.time-dt).floor()%6 != 3){
       await super.world.add(
-        Bullet(
+        EnemyBullet(
+          game: game,
           world: super.world,
-          position3D: Vector3(super.position.x, super.position.y, 0),
+          position3D: super.position3D,
           velocity: Vector3(0,0,150),
         )
       );
@@ -87,7 +91,8 @@ class Enemy extends MyComponent with HasGameRef {
 
     if(false && (super.time*20).floor() != ((super.time-dt)*20).floor()){
       super.world.add(
-          Bullet(
+          EnemyBullet(
+            game: game,
             world: world,
             position3D: Vector3(super.position.x, super.position.y, 0),
             velocity: Vector3(super.position.x, super.position.y, 0)/20,

@@ -1,10 +1,14 @@
 import 'package:flame/components.dart';
 import 'package:flutter/cupertino.dart';//SpriteComponent
+import 'package:flame/game.dart';//FlameGame
 
 class MyComponent extends SpriteComponent{
 
   //componentにカメラの影響を与えるために必要
   final World _world;
+
+  //objectを互いに参照するための措置
+  final FlameGame _game;
 
   //カメラのz座標 手前側が正
   final double _eye_z = 300;
@@ -24,8 +28,9 @@ class MyComponent extends SpriteComponent{
   Vector3 _velocity = Vector3.zero();
 
   //anchorをCenterにすることで画像の基準が真ん中になる
-  MyComponent({required World world, Vector3? position3D, Vector3? velocity, Anchor? anchor})
-      : this._world = world,
+  MyComponent({required FlameGame game, required World world, Vector3? position3D, Vector3? velocity, Anchor? anchor})
+      : this._game = game,
+        this._world = world,
         super(anchor: anchor){
 
     if(position3D != null){
@@ -44,6 +49,9 @@ class MyComponent extends SpriteComponent{
   //worldのgetter
   World get world => _world;
 
+  //gme
+  FlameGame get game => _game;
+
   //生まれてからの時間のgetter
   double get time => _time;
 
@@ -51,6 +59,8 @@ class MyComponent extends SpriteComponent{
   int get frameCount => _frameCount;
 
   double get frameRate => _frameRate;
+
+  double get eye_z => _eye_z;
 
   //外から見て3Dのベクトルを扱っているように見える
   void set position3D(Vector3 position){
