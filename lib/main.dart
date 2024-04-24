@@ -9,6 +9,11 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 // To handle Uint8List
 import 'dart:typed_data';
 
+import 'game/game_scene_widget.dart';//Gameシーン
+
+//global変数で対処
+//Uint8List? global_image;
+
 Future<void> main() async {
   runApp(const MyApp());
 }
@@ -115,10 +120,19 @@ class TakePicturePageState extends State<TakePicturePage> {
                               setState(() {
                                 _isTakingPicture = true;
                               });
-                              onTakePicture(context).then((_) {
+                              onTakePicture(context).then((_) {//!!!
                                 setState(() {
                                   _isTakingPicture = false;
                                 });
+
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context){
+                                        //転移先(俺作ったやつにGO！いぇい！)
+                                        return GameScene();
+                                      }
+                                  ),
+                                );
                               });
                             }
                                 : null,
@@ -142,20 +156,27 @@ class TakePicturePageState extends State<TakePicturePage> {
     );
   }
 
-  Future<void> onTakePicture(BuildContext context) async {
-    final image = await _controller.takePicture();
+  Future<void> onTakePicture(BuildContext context) async {///!!!
+    final XFile image = await _controller.takePicture();
 
     final Uint8List buffer = await image.readAsBytes();
+
+    //Uint8List型を渡したい
+    //global_image = buffer;
+
     // Save to camera roll
     await ImageGallerySaver.saveImage(buffer, name: image.name);
 
+    File future = File(image.path);
+
     setState(() {
-      _imageFile = File(image.path);
+      _imageFile = future;
     });
-    Future.delayed(const Duration(seconds: 3)).then((_) {
-      setState(() {
+    await Future.delayed(const Duration(seconds: 1)).then((_) {
+
+      /*setState(() {
         _imageFile = null;
-      });
+      });*/
     });
   }
 
