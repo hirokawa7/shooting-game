@@ -1,6 +1,6 @@
-# cameratest1
+# Shooting Game
 
-A new Flutter project.
+This is a smartphone app that uses Flutter to recreate a shooting game.
 
 ## Getting Started
 
@@ -14,3 +14,9 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+## Usage
+### Demo
+This application uses a camera, so it can be used on the actual device.
+
+*Confirmation of operation is in progress.
