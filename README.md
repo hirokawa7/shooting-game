@@ -16,7 +16,23 @@ For help getting started with Flutter development, view the
 samples, guidance on mobile development, and a full API reference.
 
 ## Usage
+### Setup
+We have tested the operation in Android Studio.
+
+This site (https://www.flutter-study.dev/getting-started/install) can help you set up your development environment.
+
+To resolve package dependencies, run 'flutter pub get' in the terminal.
+This will run on the actual machine or emulator.
+If the package contaion updates, run 'flutter pub get' again.
+
 ### Demo
-This application uses a camera, so it can be used on the actual device.
+
+Running 'main.dart' will work.
+
+- 'main.dart' is a main program.
+- 'pubspec.yaml' is an important file that contaions information about the packages and libraries that the Flutter project depends on. 'dependencies' section lists each package used by the project and its version.
+
+Running on the actual device is recommended
+(this is because this application uses the video from the camera devices).
 
 *Confirmation of operation is in progress.
